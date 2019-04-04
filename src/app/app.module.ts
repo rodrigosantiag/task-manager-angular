@@ -4,10 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { LearningBindsComponent } from './learning-bindings/learning-binds.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LearningBindsComponent
   ],
   imports: [
     BrowserModule,
