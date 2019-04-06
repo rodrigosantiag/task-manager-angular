@@ -10,12 +10,22 @@ const TASKS: Array<Task> = [
   {id: 5, title: 'Fazer tarefa 5'},
   {id: 6, title: 'Fazer tarefa 6'},
   {id: 7, title: 'Fazer tarefa 7'},
-]
+];
 
 @Injectable()
 
 export class TaskService {
-  public getTasks(): Array<Task> {
-    return TASKS;
+
+  public getTasks(): Promise<Task[]> {
+    const promise = new Promise((resolve, reject) => {
+      if (TASKS.length > 0) {
+        resolve(TASKS);
+      }else {
+        const error_msg = 'Não há tarefas';
+        reject(error_msg);
+      }
+    });
+    return promise;
   }
+
 }
