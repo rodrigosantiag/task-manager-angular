@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Location } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Params} from '@angular/router';
+import {Location} from '@angular/common';
 
 import 'rxjs/add/operator/switchMap';
 
-import { Task } from '../shared/task.model';
-import { TaskService } from '../shared/task.service';
+import {Task} from '../shared/task.model';
+import {TaskService} from '../shared/task.service';
 
 @Component({
   selector: 'app-task-detail',
@@ -24,7 +24,10 @@ export class TaskDetailComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.params.switchMap((params: Params) => this.taskService.getTask(+params['id']))
-      .subscribe(task => this.task = task);
+      .subscribe(
+        task => this.task = task,
+        error => alert('Ocorreu um erro no servidor, tente mais tarde')
+      );
   }
 
   public goBack(): void {
