@@ -32,7 +32,7 @@
       <a class="btn btn-info mdi mdi-information" [routerLink]="['/tasks', task.id]">
         Detalhes
       </a>
-      <button class="btn btn-danger mdi mdi-trash-can">
+      <button class="btn btn-danger mdi mdi-trash-can" (click)="deleteTask(task)">
         Excluir
       </button>
     </td>

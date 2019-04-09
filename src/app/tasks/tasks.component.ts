@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 
+import 'rxjs/add/operator/switchMap';
+
 
 import { Task } from './shared/task.model';
 import {TaskService} from './shared/task.service';
+import {Params} from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -30,7 +33,7 @@ export class TasksComponent implements OnInit {
 
     if (!this.newTask.title) {
       alert('A tarefa deve ter um título');
-    }else {
+    } else {
       this.taskService.createTask(this.newTask)
         .subscribe(
           (task) => {
@@ -40,6 +43,17 @@ export class TasksComponent implements OnInit {
           () => alert('Ocorreu um erro no servidor, tente mais tarde.')
         );
     }
+  }
+
+  public deleteTask(task: Task): void {
+    if (confirm(`Deseja realmente excluir a tarefa "${task.title}"?`)) {
+      this.taskService.deleteTask(task.id)
+        .subscribe(
+          () => this.tasks = this.tasks.filter(t => t !== task),
+          () => alert('Ocorreu um erro no servidor, tente mais tarde.')
+        );
+    }
+
   }
 
 }
