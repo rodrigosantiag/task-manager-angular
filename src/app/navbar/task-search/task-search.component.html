@@ -1,11 +1,7 @@
 <div style="position: relative;">
-  <input class="form-control mr-sm-2" type="search" placeholder="Busca de tarefas" aria-label="Busca de tarefas">
+  <input #searchInput class="form-control mr-sm-2" type="search" placeholder="Busca de tarefas" aria-label="Busca de tarefas" (keyup)="search(searchInput.value)" (search)="search('')">
 
-  <div class="list-group" style="position: absolute; width: 100%; left: 0; top: 40px; z-index: 1000">
-    <a class="list-group-item list-group-item-action" href="#">Tarefa 1</a>
-    <a class="list-group-item list-group-item-action" href="#">Tarefa 2</a>
-    <a class="list-group-item list-group-item-action" href="#">Tarefa 3</a>
-    <a class="list-group-item list-group-item-action" href="#">Tarefa 4</a>
-    <a class="list-group-item list-group-item-action" href="#">Tarefa 5</a>
+  <div class="list-group" style="position: absolute; width: 100%; left: 0; top: 40px; z-index: 1000" *ngIf="results">
+    <a style="cursor: pointer;" *ngFor="let result of results" class="list-group-item list-group-item-action" (click)="goTo(result)">{{ result.title }}</a>
   </div>
 </div>

@@ -36,11 +36,6 @@ export class TaskService {
       .map((response: Response) => response.json().data as Task);
   }
 
-  private handleErrors(error: Response) {
-    console.log('Salvando erro no arquivo de LOG - Detalhes do erro => ', error);
-    return Observable.throw(error);
-  }
-
   public create(task: Task): Observable<Task> {
     const url = this.tasksUrl;
     const body = JSON.stringify(task);
@@ -65,5 +60,18 @@ export class TaskService {
     return this.http.delete(url, { headers: this.headers })
       .catch(this.handleErrors)
       .map(() => null);
+  }
+
+  public searchByTitle(term: string): Observable<Task[]> {
+    const url = `${this.tasksUrl}?title=${term}`;
+
+    return this.http.get(url)
+      .catch(this.handleErrors)
+      .map((response: Response) => response.json().data as Task[]);
+  }
+
+  private handleErrors(error: Response) {
+    console.log('Salvando erro no arquivo de LOG - Detalhes do erro => ', error);
+    return Observable.throw(error);
   }
 }
