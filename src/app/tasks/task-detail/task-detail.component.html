@@ -4,20 +4,28 @@
   <div class="form-row">
     <div class="col-6 mr-sm-2">
       <label for="title" class="col-form-label">Título</label>
-      <input type="text" [(ngModel)]="task.title" class="form-control" id="title" name="title"
+      <input #title="ngModel" type="text" [(ngModel)]="task.title" class="form-control"
+             [class.is-invalid]="title.invalid && title.touched" [class.is-valid]="title.valid && title.touched"
+             id="title" name="title"
              required>
+      <div class="invalid-feedback">Título obrigatório!</div>
     </div>
 
     <div class="col mr-sm-2">
       <label for="deadline" class="col-form-label">Prazo de Entrega</label>
-      <input type="text" [(ngModel)]="task.deadline" class="form-control" id="deadline" name="deadline">
+      <input #deadline="ngModel" type="text" [(ngModel)]="task.deadline" class="form-control"
+             [class.is-invalid]="deadline.invalid && deadline.touched"
+             [class.is-valid]="deadline.valid && deadline.touched" id="deadline" name="deadline" required>
+      <div class="invalid-feedback">Prazo de entrega obrigatório!</div>
     </div>
 
     <div class="col mr-sm-2">
       <label for="done" class="col-form-label">Situação</label>
-      <select [(ngModel)]="task.done" name="done" id="done" class="form-control">
+      <select #done="ngModel" [(ngModel)]="task.done" name="done" id="done" class="form-control"
+              [class.is-invalid]="done.invalid && done.touched" [class.is-valid]="done.valid && done.touched" required>
         <option *ngFor="let option of taskDoneOptions" [value]="option.value">{{ option.text }}</option>
       </select>
+      <div class="invalid-feedback">Situação obrigatória!</div>
     </div>
   </div>
 
@@ -32,13 +40,7 @@
   <div class="form-row mt-4">
     <div class="col-12">
       <button class="btn btn-outline-secondary mr-2" (click)="goBack()">Voltar</button>
-      <button type="submit" class="btn btn-success" (click)="updateTask()">Atualizar</button>
+      <button [disabled]="taskForm.invalid" [ngClass]="{'btn-success': taskForm.valid, 'btn-secondary': taskForm.invalid}" type="submit" class="btn" (click)="updateTask()">Atualizar</button>
     </div>
   </div>
-
-  <hr>
-
-  <pre>{{ task | json }}</pre>
-
-
 </form>
