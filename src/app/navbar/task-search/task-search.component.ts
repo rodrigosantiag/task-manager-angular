@@ -6,10 +6,6 @@ import {TaskService} from '../../tasks/shared/task.service';
 
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/observable/of';
 
 
 @Component({
