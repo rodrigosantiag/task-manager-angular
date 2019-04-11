@@ -5,24 +5,28 @@
     <div class="col-6 mr-sm-2">
       <label for="title" class="col-form-label">Título</label>
       <input #title="ngModel" type="text" [(ngModel)]="task.title" class="form-control"
-             [class.is-invalid]="title.invalid && title.touched" [class.is-valid]="title.valid && title.touched"
+             [class.is-invalid]="showFieldError(title)" [class.is-valid]="title.valid"
              id="title" name="title"
-             required>
-      <div class="invalid-feedback">Título obrigatório!</div>
+             required minlength="3" maxlength="15">
+      <div *ngIf="showFieldError(title)" class="invalid-feedback">
+        <span *ngIf="title.errors.required">Título obrigatório!</span>
+        <span *ngIf="title.errors.minlength">Título deve ter no mínimo {{ title.errors.minlength.requiredLength }} caracteres</span>
+        <span *ngIf="title.errors.maxlength">Título deve ter no máximo {{ title.errors.maxlength.requiredLength }} caracteres</span>
+      </div>
     </div>
 
     <div class="col mr-sm-2">
       <label for="deadline" class="col-form-label">Prazo de Entrega</label>
       <input #deadline="ngModel" type="text" [(ngModel)]="task.deadline" class="form-control"
-             [class.is-invalid]="deadline.invalid && deadline.touched"
-             [class.is-valid]="deadline.valid && deadline.touched" id="deadline" name="deadline" required>
+             [class.is-invalid]="showFieldError(deadline)"
+             [class.is-valid]="deadline.valid" id="deadline" name="deadline">
       <div class="invalid-feedback">Prazo de entrega obrigatório!</div>
     </div>
 
     <div class="col mr-sm-2">
       <label for="done" class="col-form-label">Situação</label>
       <select #done="ngModel" [(ngModel)]="task.done" name="done" id="done" class="form-control"
-              [class.is-invalid]="done.invalid && done.touched" [class.is-valid]="done.valid && done.touched" required>
+              [class.is-invalid]="showFieldError(done)" [class.is-valid]="done.valid" required>
         <option *ngFor="let option of taskDoneOptions" [value]="option.value">{{ option.text }}</option>
       </select>
       <div class="invalid-feedback">Situação obrigatória!</div>
