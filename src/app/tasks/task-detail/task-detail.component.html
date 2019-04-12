@@ -7,7 +7,7 @@
       <input #title="ngModel" type="text" [(ngModel)]="task.title" class="form-control"
              [class.is-invalid]="showFieldError(title)" [class.is-valid]="title.valid"
              id="title" name="title"
-             required minlength="3" maxlength="15">
+             required minlength="2" maxlength="255">
       <div *ngIf="showFieldError(title)" class="invalid-feedback">
         <span *ngIf="title.errors.required">Título obrigatório!</span>
         <span *ngIf="title.errors.minlength">Título deve ter no mínimo {{ title.errors.minlength.requiredLength }} caracteres</span>
@@ -19,7 +19,7 @@
       <label for="deadline" class="col-form-label">Prazo de Entrega</label>
       <input #deadline="ngModel" type="text" [(ngModel)]="task.deadline" class="form-control"
              [class.is-invalid]="showFieldError(deadline)"
-             [class.is-valid]="deadline.valid" id="deadline" name="deadline">
+             [class.is-valid]="deadline.valid" id="deadline" name="deadline" required>
       <div class="invalid-feedback">Prazo de entrega obrigatório!</div>
     </div>
 
