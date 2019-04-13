@@ -1,6 +1,6 @@
 <h1 class="border-bottom mb-4">Detalhes da Tarefa: {{ task.title }}</h1>
 
-<form #taskForm="ngForm">
+<form #taskForm="ngForm" (ngSubmit)="updateTask()">
   <div class="form-row">
     <div class="col-6 mr-sm-2">
       <label for="title" class="col-form-label">Título</label>
@@ -45,8 +45,8 @@
 
   <div class="form-row mt-4">
     <div class="col-12">
-      <button class="btn btn-outline-secondary mr-2" (click)="goBack()">Voltar</button>
-      <button [disabled]="taskForm.invalid" [ngClass]="{'btn-success': taskForm.valid, 'btn-secondary': taskForm.invalid}" type="submit" class="btn" (click)="updateTask()">Atualizar</button>
+      <button [disabled]="taskForm.invalid" [ngClass]="{'btn-success': taskForm.valid, 'btn-secondary': taskForm.invalid}" type="submit" class="btn">Atualizar</button>
+      <button type="button" class="btn btn-outline-secondary mr-2" (click)="goBack()">Voltar</button>
     </div>
   </div>
 </form>

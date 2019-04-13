@@ -2,16 +2,18 @@
 
 <div class="card">
   <div class="card-header">
-    <div class="row">
-      <div class="col-md-10">
-        <input type="text" class="form-control" placeholder="Digite aqui uma nova tarefa" [(ngModel)]="newTask.title" >
+    <form (ngSubmit)="createTask()">
+      <div class="row">
+        <div class="col-md-10">
+          <input type="text" class="form-control" name="title" placeholder="Digite aqui uma nova tarefa" [(ngModel)]="newTask.title">
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-success" type="submit">
+            Adicionar Tarefa
+          </button>
+        </div>
       </div>
-      <div class="col-md-2">
-        <button class="btn btn-success" (click)="createTask()">
-          Adicionar Tarefa
-        </button>
-      </div>
-    </div>
+    </form>
   </div>
 </div>
 
