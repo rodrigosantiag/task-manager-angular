@@ -1,6 +1,6 @@
-<h1 class="border-bottom mb-4">Detalhes da Tarefa: {{ task?.title }}</h1>
+<h1 class="border-bottom mb-4">Detalhes da Tarefa: {{ task.title }}</h1>
 
-<form #taskForm="ngForm" *ngIf="task">
+<form #taskForm="ngForm">
   <div class="form-row">
     <div class="col-6 mr-sm-2">
       <label for="title" class="col-form-label">Título</label>
@@ -19,8 +19,10 @@
       <label for="deadline" class="col-form-label">Prazo de Entrega</label>
       <input #deadline="ngModel" type="text" [(ngModel)]="task.deadline" class="form-control"
              [class.is-invalid]="showFieldError(deadline)"
-             [class.is-valid]="deadline.valid" id="deadline" name="deadline" required>
-      <div class="invalid-feedback">Prazo de entrega obrigatório!</div>
+             [class.is-valid]="deadline.valid" id="deadline" name="deadline" [options]="calendarOptions" NgTempusdominusBootstrapInput required>
+      <div *ngIf="showFieldError(deadline)" class="invalid-feedback">
+        <span *ngIf="deadline.errors.required">Prazo de entrega obrigatório!</span>
+      </div>
     </div>
 
     <div class="col mr-sm-2">
@@ -29,7 +31,7 @@
               [class.is-invalid]="showFieldError(done)" [class.is-valid]="done.valid" required>
         <option *ngFor="let option of taskDoneOptions" [value]="option.value">{{ option.text }}</option>
       </select>
-      <div class="invalid-feedback">Situação obrigatória!</div>
+      <div *ngIf="showFieldError(done)" class="invalid-feedback">Situação obrigatória!</div>
     </div>
   </div>
 
@@ -48,3 +50,9 @@
     </div>
   </div>
 </form>
+
+<hr>
+
+<pre>
+  {{ task | json }}
+</pre>

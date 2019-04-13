@@ -17,6 +17,7 @@ import {TaskService} from './tasks/shared/task.service';
 
 // Modules Imports
 import {AppRoutingModule} from './app-routing.module';
+import {NgTempusdominusBootstrapModule} from 'ngx-tempusdominus-bootstrap';
 
 // In memory web api
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
@@ -33,9 +34,6 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 
-// imports jquery
-import * as $ from 'jquery';
-
 
 @NgModule({
   declarations: [
@@ -49,9 +47,10 @@ import * as $ from 'jquery';
   imports: [
     BrowserModule,
     FormsModule,
+    NgTempusdominusBootstrapModule,
     HttpModule,
     AppRoutingModule,
-    InMemoryWebApiModule.forRoot(InMemoryTaskDataService)
+    InMemoryWebApiModule.forRoot(InMemoryTaskDataService),
   ],
   providers: [
     TaskService
