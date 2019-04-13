@@ -1,5 +1,37 @@
 <h1 class="border-bottom mb-4">Detalhes da Tarefa: {{ task.title }}</h1>
 
+
+<form [formGroup]="reactiveTaskForm">
+  <div class="form-row">
+    <div class="col-6 mr-sm-2">
+      <label for="title" class="col-form-label">Título</label>
+      <input id="title" type="text" formControlName="title" class="form-control">
+    </div>
+
+    <div class="col mr-sm-2">
+      <label for="deadline" class="col-form-label">Prazo de entrega</label>
+      <input id="deadline" type="text" formControlName="deadline" class="form-control">
+    </div>
+
+    <div class="col mr-sm-2">
+      <label for="done" class="col-form-label">Situação</label>
+      <select id="done" class="form-control" formControlName="done">
+        <option *ngFor="let option of taskDoneOptions" [value]="option.value">{{ option.text }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-12 mr-sm-2">
+      <label for="description" class="col-form-label">Descrição</label>
+      <textarea id="description" rows="4" formControlName="description" class="form-control"></textarea>
+    </div>
+  </div>
+
+  <pre>{{ reactiveTaskForm.value | json }}</pre>
+</form>
+
+<!--
 <form #taskForm="ngForm" (ngSubmit)="updateTask()">
   <div class="form-row">
     <div class="col-6 mr-sm-2">
@@ -56,3 +88,4 @@
 <pre>
   {{ task | json }}
 </pre>
+-->
