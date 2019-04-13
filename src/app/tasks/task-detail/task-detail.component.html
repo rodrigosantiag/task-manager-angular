@@ -18,9 +18,9 @@
     <div class="col mr-sm-2">
       <label for="deadline" class="col-form-label">Prazo de Entrega</label>
       <input #deadline="ngModel" type="text" [(ngModel)]="task.deadline" class="form-control"
-             [class.is-invalid]="showFieldError(deadline)"
-             [class.is-valid]="deadline.valid" id="deadline" name="deadline" [options]="calendarOptions" NgTempusdominusBootstrapInput required>
-      <div *ngIf="showFieldError(deadline)" class="invalid-feedback">
+             [class.is-invalid]="showFieldError(deadline, false)"
+             [class.is-valid]="deadline.valid" id="deadline" name="deadline" required>
+      <div *ngIf="showFieldError(deadline, false)" class="invalid-feedback">
         <span *ngIf="deadline.errors.required">Prazo de entrega obrigatório!</span>
       </div>
     </div>

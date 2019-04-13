@@ -7,8 +7,6 @@ import 'rxjs/add/operator/switchMap';
 import {Task} from '../shared/task.model';
 import {TaskService} from '../shared/task.service';
 
-import * as moment from 'moment';
-
 @Component({
   selector: 'app-task-detail',
   templateUrl: './task-detail.component.html'
@@ -16,8 +14,6 @@ import * as moment from 'moment';
 
 export class TaskDetailComponent implements OnInit, AfterViewInit {
   public task: Task;
-  public calendarOptions: any;
-  public momentDate;
   public taskDoneOptions: Array<any> = [
     {value: false, text: 'Pendente'},
     {value: true, text: 'Feita'}
@@ -32,7 +28,16 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
 
   public ngOnInit(): void {
     this.task = new Task(null, null);
-    this.calendarOptions = {
+
+    this.route.params.switchMap((params: Params) => this.taskService.getById(+params['id']))
+      .subscribe(
+        task => this.task = task,
+        error => alert('Ocorreu um erro no servidor, tente mais tarde.')
+      );
+  }
+
+  public ngAfterViewInit(): void {
+    $('#deadline').datetimepicker({
       sideBySide: true,
       locale: 'pt-br',
       icons: {
@@ -45,19 +50,11 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
         today: 'mdi mdi-calendar-check-outline',
         clear: 'mdi mdi-delete-outline',
         close: 'mdi mdi-close'
-      }
-    };
-
-    this.route.params.switchMap((params: Params) => this.taskService.getById(+params['id']))
-      .subscribe(task => {
-          this.task = task;
-          Object.assign(this.calendarOptions, { date: this.task.deadline ? moment(this.task.deadline) : null });
-        },
-        error => alert('Ocorreu um erro no servidor, tente mais tarde.')
-      );
-  }
-
-  public ngAfterViewInit(): void {
+      },
+      showTodayButton: true,
+      showClear: true,
+      showClose: true
+    }).on('dp.dp.change', () => this.task.deadline = $('#deadline').val());
   }
 
   public goBack(): void {
@@ -75,7 +72,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public showFieldError(field): boolean {
-    return field.invalid && (field.touched || field.dirty);
+  public showFieldError(field, dirty: boolean = true): boolean {
+    return dirty ? field.invalid && (field.touched || field.dirty) : field.invalid && field.touched;
   }
 }
