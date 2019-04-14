@@ -1,7 +1,7 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Location} from '@angular/common';
-import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
+import {FormGroup, FormControl, FormBuilder, Validators, AbstractControl} from '@angular/forms';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -16,10 +16,7 @@ import {TaskService} from '../shared/task.service';
 export class TaskDetailComponent implements OnInit, AfterViewInit {
   public reactiveTaskForm: FormGroup;
   public task: Task;
-  public taskDoneOptions: Array<any> = [
-    {value: false, text: 'Pendente'},
-    {value: true, text: 'Feita'}
-  ]
+  public taskDoneOptions: Array<any>;
 
   public constructor(
     private taskService: TaskService,
@@ -27,6 +24,12 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
     private location: Location,
     private formBuilder: FormBuilder
   ) {
+
+    this.taskDoneOptions = [
+      {value: false, text: 'Pendente'},
+      {value: true, text: 'Feita'}
+    ];
+
     this.reactiveTaskForm = this.formBuilder.group({
       title: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(255)]],
       deadline: [null, Validators.required],
@@ -47,23 +50,6 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
 
   public setTask(task: Task): void {
     this.task = task;
-
-    // setValue
-    /*const formModel = {
-      title: task.title || null,
-      deadline: task.deadline || null,
-      done: task.done || null,
-      description: task.description || null
-    };
-
-    this.reactiveTaskForm.setValue(formModel);*/
-
-    // patchValue
-    /*const formModel = {
-      title: task.title || null,
-      description: task.description || 'Teste'
-    };*/
-
     this.reactiveTaskForm.patchValue(task);
   }
 
@@ -85,7 +71,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
       showTodayButton: true,
       showClear: true,
       showClose: true
-    }).on('dp.dp.change', () => this.reactiveTaskForm.get('deadline').setValue($('#deadline').val()));
+    }).on('dp.dp.change', () => this.getField('deadline').setValue($('#deadline').val()));
   }
 
   public goBack(): void {
@@ -93,10 +79,10 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
   }
 
   public updateTask(): void {
-    this.task.title = this.reactiveTaskForm.get('title').value;
-    this.task.deadline = this.reactiveTaskForm.get('deadline').value;
-    this.task.done = this.reactiveTaskForm.get('done').value;
-    this.task.description = this.reactiveTaskForm.get('description').value;
+    this.task.title = this.getField('title').value;
+    this.task.deadline = this.getField('deadline').value;
+    this.task.done = this.getField('done').value;
+    this.task.description = this.getField('description').value;
 
     this.taskService.update(this.task).subscribe(
       () => alert('Tarefa atualizada com sucesso!'),
@@ -104,7 +90,21 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
     );
   }
 
-  public showFieldError(field): boolean {
+  // form errors methods
+
+  public fieldClassForErrorOrSuccess(fieldName: string): Object {
+    return {
+      'is-invalid': this.showFieldError(fieldName),
+      'is-valid': this.getField(fieldName).valid
+    };
+  }
+
+  public showFieldError(fieldName: string): boolean {
+    const field = this.getField(fieldName);
     return field.invalid && (field.touched || field.dirty);
+  }
+
+  public getField(fieldName: string): AbstractControl {
+    return this.reactiveTaskForm.get(fieldName);
   }
 }
