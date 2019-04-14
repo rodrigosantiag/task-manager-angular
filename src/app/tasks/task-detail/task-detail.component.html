@@ -5,19 +5,30 @@
   <div class="form-row">
     <div class="col-6 mr-sm-2">
       <label for="title" class="col-form-label">Título</label>
-      <input id="title" type="text" formControlName="title" class="form-control">
+      <input id="title" type="text" formControlName="title" class="form-control" [class.is-invalid]="showFieldError(reactiveTaskForm.get('title'))" [class.is-valid]="reactiveTaskForm.get('title').valid">
+
+      <div *ngIf="showFieldError(reactiveTaskForm.get('title'))" class="invalid-feedback">
+        <span *ngIf="reactiveTaskForm.get('title').errors.required">Título obrigatório!</span>
+        <span *ngIf="reactiveTaskForm.get('title').errors.minlength">Título deve ter no mínimo {{ reactiveTaskForm.get('title').errors.minlength.requiredLength }} caracteres</span>
+        <span *ngIf="reactiveTaskForm.get('title').errors.maxlength">Título deve ter no máximo {{ reactiveTaskForm.get('title').errors.maxlength.requiredLength }} caracteres</span>
+      </div>
     </div>
 
     <div class="col mr-sm-2">
       <label for="deadline" class="col-form-label">Prazo de entrega</label>
-      <input id="deadline" type="text" formControlName="deadline" class="form-control">
+      <input id="deadline" type="text" formControlName="deadline" class="form-control" [class.is-invalid]="showFieldError(reactiveTaskForm.get('deadline'))"
+             [class.is-valid]="reactiveTaskForm.get('deadline').valid">
+      <div *ngIf="showFieldError(reactiveTaskForm.get('deadline'))" class="invalid-feedback">
+        <span *ngIf="reactiveTaskForm.get('deadline').errors.required">Prazo de entrega obrigatório!</span>
+      </div>
     </div>
 
     <div class="col mr-sm-2">
       <label for="done" class="col-form-label">Situação</label>
-      <select id="done" class="form-control" formControlName="done">
+      <select id="done" class="form-control" formControlName="done" [class.is-invalid]="showFieldError(reactiveTaskForm.get('done'))" [class.is-valid]="reactiveTaskForm.get('done').valid">
         <option *ngFor="let option of taskDoneOptions" [value]="option.value">{{ option.text }}</option>
       </select>
+      <div *ngIf="showFieldError(reactiveTaskForm.get('done'))" class="invalid-feedback">Situação obrigatória!</div>
     </div>
   </div>
 
