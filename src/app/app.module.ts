@@ -19,6 +19,7 @@ import {Angular2TokenService} from 'angular2-token';
 
 // Services Imports
 import {TaskService} from './tasks/shared/task.service';
+import {AuthService} from './shared/auth.service';
 
 // Modules Imports
 import {AppRoutingModule} from './app-routing.module';
@@ -64,6 +65,7 @@ import * as datetimepicker from 'eonasdan-bootstrap-datetimepicker';
   ],
   providers: [
     Angular2TokenService,
+    AuthService,
     TaskService
   ],
   bootstrap: [AppComponent]
