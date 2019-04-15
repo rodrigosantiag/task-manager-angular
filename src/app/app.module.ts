@@ -14,6 +14,9 @@ import {TaskDetailComponent} from './tasks/task-detail/task-detail.component';
 import {TaskSearchComponent} from './navbar/task-search/task-search.component';
 import {TasksComponent} from './tasks/tasks.component';
 
+// Angular plugin imports
+import {Angular2TokenService} from 'angular2-token';
+
 // Services Imports
 import {TaskService} from './tasks/shared/task.service';
 
@@ -60,6 +63,7 @@ import * as datetimepicker from 'eonasdan-bootstrap-datetimepicker';
     InMemoryWebApiModule.forRoot(InMemoryTaskDataService),
   ],
   providers: [
+    Angular2TokenService,
     TaskService
   ],
   bootstrap: [AppComponent]
