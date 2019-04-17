@@ -5,7 +5,7 @@
   </button>
 
   <div *ngIf="authService.userSignedIn()" class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-4">
       <li routerLinkActive="active" class="nav-item">
         <a class="nav-link" routerLink="/dashboard">Dashboard <!-- TODO: quando iserir o active ver esse span aqui <span class="sr-only">(current)</span>--></a>
       </li>
@@ -13,8 +13,12 @@
         <a class="nav-link" routerLink="/tasks">Tarefas</a>
       </li>
     </ul>
-    <div class="form-inline my-2 my-lg-0">
+    <div class="form-inline my-2 my-lg-0 mr-auto">
       <app-task-search></app-task-search>
+    </div>
+
+    <div class="my-2 my-lg-0">
+      <button class="btn btn-danger mdi mdi-logout" (click)="signOutUser()">Sair</button>
     </div>
   </div>
 </nav>
