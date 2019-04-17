@@ -2,6 +2,16 @@
 
 <div class="jumbotron">
 
+  <div *ngIf="formErrors" class="alert alert-danger">
+    <strong class="alert-heading mdi mdi-alert-circle">
+      Ocorreu um erro ao tentar entrar no sistema.
+    </strong>
+
+    <ul>
+      <li *ngFor="let error of formErrors">{{ error }}</li>
+    </ul>
+  </div>
+
   <form [formGroup]="form" (ngSubmit)="signInUser()">
     <div class="form-group row">
       <label for="email" class="col-sm-4 col-form-label text-right">Email</label>
@@ -28,7 +38,7 @@
 
     <div class="form-group row">
       <div class="offset-sm-4 col-sm-8">
-        <button [disabled]="form.invalid" [ngClass]="{'btn-secondary': form.invalid}" type="submit" class="btn btn-primary">Fazer Login</button>
+        <button [disabled]="form.invalid || submitted" [ngClass]="{'btn-secondary': form.invalid}" type="submit" class="btn btn-primary">Fazer Login</button>
       </div>
     </div>
   </form>

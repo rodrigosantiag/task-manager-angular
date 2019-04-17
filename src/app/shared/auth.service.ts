@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Response} from '@angular/http';
 
-import {Angular2TokenService} from 'angular2-token';
+import {Angular2TokenService, SignInData} from 'angular2-token';
 import {Observable} from 'rxjs/Observable';
 
 import {User} from './user.model';
@@ -17,9 +17,14 @@ export class AuthService {
       .catch(this.handleErrors);
   }
 
-  public signIn(uid: string, password: string) {
-    // call Angular2-Token SignIn method here
-    // returns an Observable<Response>
+  public signIn(uid: string, password: string): Observable<Response> {
+    const signInData: SignInData = {
+      email: uid,
+      password: password
+    };
+
+    return this.tokenService.signIn(signInData)
+      .catch(this.handleErrors);
   }
 
   public signOut(): Observable<Response> {

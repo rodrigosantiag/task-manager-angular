@@ -52,7 +52,7 @@ export class SignUpFormComponent {
     }
   }
 
-  public setupForm() {
+  private setupForm() {
     this.form = this.formBuilder.group({
         name: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
         email: [null, [Validators.required, Validators.email]],
