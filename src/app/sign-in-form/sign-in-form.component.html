@@ -41,6 +41,13 @@
         <button [disabled]="form.invalid || submitted" [ngClass]="{'btn-secondary': form.invalid}" type="submit" class="btn btn-primary">Fazer Login</button>
       </div>
     </div>
+
+    <div class="form-group row">
+      <div class="offset-sm-4 col-sm-8">
+        Se vocẽ não possui uma conta,
+        <a routerLink="/sign-up">clique aqui</a>
+      </div>
+    </div>
   </form>
 
 </div>
