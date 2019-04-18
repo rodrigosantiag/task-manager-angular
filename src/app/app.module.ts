@@ -14,12 +14,10 @@ import {TaskDetailComponent} from './tasks/task-detail/task-detail.component';
 import {TaskSearchComponent} from './navbar/task-search/task-search.component';
 import {TasksComponent} from './tasks/tasks.component';
 
-// Angular plugin imports
-import {Angular2TokenService} from 'angular2-token';
-
 // Services Imports
 import {AuthService} from './shared/auth.service';
 import {TaskService} from './tasks/shared/task.service';
+import {TokenService} from './shared/token.service';
 
 // guards imports
 import {AuthGuard} from './guards/auth.guard';
@@ -63,11 +61,11 @@ import * as datetimepicker from 'eonasdan-bootstrap-datetimepicker';
     AppRoutingModule
   ],
   providers: [
-    Angular2TokenService,
     AuthGuard,
     AuthService,
     NotAuthenticatedGuard,
-    TaskService
+    TaskService,
+    TokenService
   ],
   bootstrap: [AppComponent]
 })
