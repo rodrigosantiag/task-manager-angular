@@ -4,7 +4,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div *ngIf="authService.userSignedIn()" class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div *ngIf="userSignedIn()" class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-4">
       <li routerLinkActive="active" class="nav-item">
         <a class="nav-link" routerLink="/dashboard">Dashboard <!-- TODO: quando iserir o active ver esse span aqui <span class="sr-only">(current)</span>--></a>
