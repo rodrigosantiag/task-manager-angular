@@ -2,6 +2,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
+import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 
 // Components Imports
@@ -26,17 +27,6 @@ import {NotAuthenticatedGuard} from './guards/not-authenticated.guard';
 // Modules Imports
 import {AppRoutingModule} from './app-routing.module';
 
-// rjxs operators
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-
-// rxjs modules
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/throw';
-
 // imports jquery
 import * as $ from 'jquery';
 import * as datetimepicker from 'eonasdan-bootstrap-datetimepicker';
@@ -58,6 +48,7 @@ import * as datetimepicker from 'eonasdan-bootstrap-datetimepicker';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [

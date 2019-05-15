@@ -1,7 +1,9 @@
+
+import {throwError as observableThrowError} from 'rxjs';
 import { Response } from '@angular/http';
 import { Injectable } from '@angular/core';
-
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs/internal/Observable';
+import {catchError, map} from 'rxjs/operators';
 
 import {Task} from './task.model';
 import {TokenService} from '../../shared/token.service';
@@ -17,24 +19,24 @@ export class TaskService {
     const url = `${this.tasksUrl}?q[s]=updated_at+DESC`;
 
     return this.tokenHttp.get(url)
-      .catch(this.handleErrors)
-      .map((response: Response) => this.responseToTasks(response));
+      .pipe(catchError(this.handleErrors),
+      map((response: Response) => this.responseToTasks(response)));
   }
 
   public getImportant(): Observable<Task[]> {
     const url = `${this.tasksUrl}?q[s]=deadline+ASC`;
 
     return this.tokenHttp.get(url)
-      .catch(this.handleErrors)
-      .map((response: Response) => this.responseToTasks(response));
+      .pipe(catchError(this.handleErrors),
+      map((response: Response) => this.responseToTasks(response)));
   }
 
   public getById(id: number): Observable<Task> {
     const url = `${this.tasksUrl}/${id}`;
 
     return this.tokenHttp.get(url)
-      .catch(this.handleErrors)
-      .map((response: Response) => this.responseToTask(response));
+      .pipe(catchError(this.handleErrors),
+      map((response: Response) => this.responseToTask(response)));
   }
 
   public create(task: Task): Observable<Task> {
@@ -42,8 +44,8 @@ export class TaskService {
     const body = JSON.stringify(task);
 
     return this.tokenHttp.post(url, body)
-      .catch(this.handleErrors)
-      .map((response: Response) => this.responseToTask(response));
+      .pipe(catchError(this.handleErrors),
+      map((response: Response) => this.responseToTask(response)));
   }
 
   public update(task: Task): Observable<Task> {
@@ -51,29 +53,29 @@ export class TaskService {
     const body = JSON.stringify(task);
 
     return this.tokenHttp.put(url, body)
-      .catch(this.handleErrors)
-      .map(() => task);
+      .pipe(catchError(this.handleErrors),
+      map(() => task));
   }
 
   public delete(id: number): Observable<null> {
     const url = `${this.tasksUrl}/${id}`;
 
     return this.tokenHttp.delete(url)
-      .catch(this.handleErrors)
-      .map(() => null);
+      .pipe(catchError(this.handleErrors),
+      map(() => null));
   }
 
   public searchByTitle(term: string): Observable<Task[]> {
     const url = `${this.tasksUrl}?q[title_cont]=${term}`;
 
     return this.tokenHttp.get(url)
-      .catch(this.handleErrors)
-      .map((response: Response) => this.responseToTasks(response));
+      .pipe(catchError(this.handleErrors),
+      map((response: Response) => this.responseToTasks(response)));
   }
 
   private handleErrors(error: Response) {
     console.log('Salvando erro no arquivo de LOG - Detalhes do erro => ', error);
-    return Observable.throw(error);
+    return observableThrowError(error);
   }
 
   private responseToTasks(response: Response): Array<Task> {

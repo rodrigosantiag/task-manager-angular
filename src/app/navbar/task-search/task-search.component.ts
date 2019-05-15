@@ -4,8 +4,10 @@ import {Router} from '@angular/router';
 import {Task} from '../../tasks/shared/task.model';
 import {TaskService} from '../../tasks/shared/task.service';
 
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
+import { of } from 'rxjs';
+import {Observable} from 'rxjs/internal/Observable';
+import {Subject} from 'rxjs/internal/Subject';
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 
 
 @Component({
@@ -21,13 +23,13 @@ export class TaskSearchComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.searchTerms
-      .debounceTime(500)
-      .distinctUntilChanged()
-      .switchMap(
-        term => term.trim() ? this.taskService.searchByTitle(term) : Observable.of<Task[]>([])
-      )
-      .subscribe(tasks => this.results = tasks);
+    this.searchTerms.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap(
+        term => term.trim() ? this.taskService.searchByTitle(term) : of(<Task[]>([])
+      )))
+      .subscribe((tasks: Array<Task>) => this.results = tasks);
   }
 
   public search(term: string) {

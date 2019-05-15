@@ -31,7 +31,7 @@
     <td>{{ task.id }}</td>
     <td>{{ task.title }}</td>
     <td>
-      <a class="btn btn-info mdi mdi-information" [routerLink]="['/tasks', task.id]">
+      <a class="btn btn-info mdi mdi-information mr-2" [routerLink]="['/tasks', task.id]">
         Detalhes
       </a>
       <button class="btn btn-danger mdi mdi-trash-can" (click)="deleteTask(task)">

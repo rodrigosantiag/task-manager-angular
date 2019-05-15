@@ -1,9 +1,10 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 import {Location} from '@angular/common';
 import {FormGroup, FormControl, FormBuilder, Validators, AbstractControl} from '@angular/forms';
+import { switchMap } from 'rxjs/operators';
 
-import 'rxjs/add/operator/switchMap';
+
 
 import {FormUtils} from '../../shared/form.utils';
 import {Task} from '../shared/task.model';
@@ -32,7 +33,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
       {value: true, text: 'Feita'}
     ];
 
-    this.form= this.formBuilder.group({
+    this.form = this.formBuilder.group({
       title: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(255)]],
       deadline: [null, Validators.required],
       done: [null, Validators.required],
@@ -45,9 +46,9 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
   public ngOnInit(): void {
     this.task = new Task(null, null);
 
-    this.route.params.switchMap((params: Params) => this.taskService.getById(+params['id']))
+    this.route.paramMap.pipe(switchMap((params: ParamMap) => this.taskService.getById(+params.get('id'))))
       .subscribe(
-        task => this.setTask(task),
+        (task: Task) => this.setTask(task),
         error => alert('Ocorreu um erro no servidor, tente mais tarde.')
       );
   }
